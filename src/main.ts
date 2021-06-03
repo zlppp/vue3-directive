@@ -36,4 +36,3 @@ createApp(App).use(store).use(router)
 .use(ScrollTo)
 .use(Debounce)
 .mount('#app')
-// createApp(App).
