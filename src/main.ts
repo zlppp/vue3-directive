@@ -3,12 +3,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import { Table, Card, Button, Modal } from 'ant-design-vue'
+import { Table, Card, Button, Modal, Input } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 
 import directivePlug from './directive'
 import lazyLoad from './directive/lazyLoad'
 import Money from './directive/money'
+import ScrollLock from './directive/scrollLock'
 
 import {
   Copy,
@@ -27,6 +28,7 @@ createApp(App).use(store).use(router)
 .use(WaterMark)
 .use(lazyLoad)
 .use(Money)
+.use(Input)
 .use(TableScroll)
 .use(ClickOutside)
 .use(Table)
@@ -35,4 +37,5 @@ createApp(App).use(store).use(router)
 .use(Modal)
 .use(ScrollTo)
 .use(Debounce)
+.use(ScrollLock)
 .mount('#app')

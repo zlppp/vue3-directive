@@ -13,16 +13,24 @@ Money.install = (app:App, options:any) => {
     //   })
     // },
     updated(el, binding) {
-      if (!/^[0-9]|\.*$/.test(binding.value)) return
-      let value = binding.value.replace(/,/g, '')
-      let a = value.split('').reverse()
+      console.log(binding, el)
+      let value = binding.value
+      let val = ''
+      let value2 = value.replace(/[^0-9]/g, '')
+      // console.log(value2, 'value2')
+      // el.addEventListener('keyup', function () {
+      //   val = value.replace(/[^0-9]*/g, '')
+      //   console.log(val)
+      // })
+      let a = value2.split('').reverse()
       for (var i = 0; i< a.length; i++) {
         if ((i+1) % 4 == 0) {
-          a.splice(i,0,',');
+          a.splice(i, 0, ',')
         }
       }
       a.reverse()
-      el.value = a.reverse().join('')
+      // el.html('eee')
+      el.innerHTML = a.reverse().join('')
       // console.log(binding.value, 'money',)
     }
   })

@@ -25,8 +25,9 @@
     </div>
     
     <h3 class="title">v-click-outside 点击元素外部区域隐藏组件</h3>
+    <a-button @click="showCard">显示元素{{isShowCard}}</a-button>
     <div>
-      <a-card v-click-outside title="Default size card" style="width: 300px">
+      <a-card v-click-outside v-show="isShowCard" title="Default size card" style="width: 300px">
         <template #extra><a href="#">more</a></template>
         <p>card content</p>
         <p>card content</p>
@@ -44,22 +45,25 @@
     <!-- 模态框，锁定下层不能滚动 -->
     <h3 class="title">v-scoll-lock 模态框锁定下层元素</h3>
     <a-button @click="isShow = true">打开模态框</a-button>
-    <a-modal v-model:visible="isShow" title="Basic Modal">
+    <div class="modal-flex" v-show="isShow" v-scroll-lock>
+      <a-button @click="isShow = false">关闭</a-button>
+    </div>
+    <!-- <a-modal v-model:visible="isShow" title="Basic Modal">
       <p>Some contents...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
-    </a-modal>
+    </a-modal> -->
 
     <!-- v-debounce 文本框防抖 -->
     <h3 class="title">文本框防抖,delay默认500</h3>
-    <input v-debounce="{fn: inputKeyUp, delay: 300}" v-model="value" />
-
+    <a-input v-debounce="{fn: inputKeyUp, delay: 800}" v-model="value" style="width: 200px;"/>
+    {{value}}
     <h3 class="title">v-lazy-load 图片懒加载</h3>
     <img v-lazy-load data-src="@/assets/lazy.png" alt="">
 
     <h3>输入内容转货币</h3>
-    <p>¥{{money}}</p>
-    <input type="text" v-model="money" v-money="money" />
+    <p>¥<span v-money="money"> {{money}}</span></p>
+    <input type="text" v-model="money"  />
   </div>
 </template>
 
@@ -92,8 +96,10 @@ export default defineComponent({
       dataSource: any[];
       value: string;
       isShow: Boolean;
+      isShowCard: Boolean,
       money: string,
-      inputKeyUp: () => void
+      inputKeyUp: () => void,
+      inputVal: string | number
     }
 
     const data:DataProps = reactive({
@@ -101,12 +107,18 @@ export default defineComponent({
       dataSource,
       value: '',
       isShow: false,
+      isShowCard: true,
       money: '',
+      inputVal: '',
       inputKeyUp: () => {
+        alert(data.value)
+        console.log(data.value, 'keyup')
         if (data.value) {
-          console.log(data.value)
           // 请求
         }
+      },
+      showCard: () => {
+        data.isShowCard = true
       }
     })
     const refData = toRefs(data)
@@ -145,5 +157,14 @@ export default defineComponent({
 }
 .margin-left {
   margin-left: 15px;
+}
+.modal-flex {
+  z-index: 9999;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,.7);
 }
 </style>
